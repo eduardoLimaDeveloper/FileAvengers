@@ -1,4 +1,4 @@
-package com.appsmiths.lima.fileavengers
+package com.appsmiths.lima.sampleapp
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle

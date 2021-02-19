@@ -1,2 +1,3 @@
+include ':fileavengers'
 include ':app'
 rootProject.name = "File Avengers"

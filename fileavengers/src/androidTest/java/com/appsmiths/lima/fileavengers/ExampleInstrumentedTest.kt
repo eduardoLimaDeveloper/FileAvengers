@@ -19,6 +19,6 @@ class ExampleInstrumentedTest {
     fun useAppContext() {
         // Context of the app under test.
         val appContext = InstrumentationRegistry.getInstrumentation().targetContext
-        assertEquals("com.appsmiths.lima.fileavengers", appContext.packageName)
+        assertEquals("com.appsmiths.lima.fileavengers.test", appContext.packageName)
     }
 }
