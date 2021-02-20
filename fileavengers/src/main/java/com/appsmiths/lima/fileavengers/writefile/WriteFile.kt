@@ -28,7 +28,7 @@ class WriteFile(private val listener: WriteFileListener) {
         fun build(listener: WriteFileListener) = WriteFile(listener)
     }
 
-    fun execute(filePath: String, fileName: String, content: String) {
+    fun execute(filePath: String, fileName: String, content: String, deleteIfExist: Boolean = false) {
         val file = File(filePath, fileName)
         if (!file.exists()) {
             try {
@@ -36,6 +36,9 @@ class WriteFile(private val listener: WriteFileListener) {
             } catch (exception: Exception) {
                 listener.onFailed(exception)
             }
+        } else if(file.exists() && deleteIfExist) {
+            file.delete()
+            file.createNewFile()
         }
 
         try {
