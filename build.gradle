@@ -1,39 +1,23 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 buildscript {
     ext.versions = [
-            'libVersionName': '0.1',
             'kotlin': '1.4.30'
     ]
 
     repositories {
         google()
-        mavenCentral()
-        maven {
-            url "https://dl.bintray.com/kotlin/dokka"
-        }
-        maven {
-            url "https://plugins.gradle.org/m2/"
-        }
+        jcenter()
     }
     dependencies {
         classpath "com.android.tools.build:gradle:4.1.2"
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:${versions.kotlin}"
-        classpath "org.jetbrains.kotlin:kotlin-android-extensions:${versions.kotlin}"
-        classpath "com.github.ben-manes:gradle-versions-plugin:0.36.0"
-        classpath "org.jetbrains.dokka:dokka-gradle-plugin:1.4.20"
-        classpath 'com.jfrog.bintray.gradle:gradle-bintray-plugin:1.8.4'
     }
 }
 
 allprojects {
     repositories {
         google()
-        mavenCentral()
-        maven {
-            url = "https://dl.bintray.com/kotlin/dokka"
-        }
-        // org.jetbrains.trove4j:trove4j:20160824.
-        maven { url 'http://maven.aliyun.com/nexus/content/groups/public/' }
+        jcenter()
     }
 }
 
