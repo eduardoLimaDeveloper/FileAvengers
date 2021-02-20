@@ -15,7 +15,7 @@
  *
  */
 
-package com.appsmiths.lima.fileavengers.readfile
+package com.eduardo.lima.fileavengers.readfile
 
 import java.io.BufferedReader
 import java.io.File
@@ -26,7 +26,8 @@ import java.io.InputStreamReader
 class ReadFile(private val listener: ReadFileListener) {
 
     class Builder {
-        fun build(listener: ReadFileListener) = ReadFile(listener)
+        fun build(listener: ReadFileListener) =
+            ReadFile(listener = listener)
     }
 
     fun execute(filePath: String, fileName: String, charsetName: String = UTF8_ENCODING) {

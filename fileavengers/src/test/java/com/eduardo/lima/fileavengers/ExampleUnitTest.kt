@@ -1,4 +1,4 @@
-package com.appsmiths.lima.fileavengers
+package com.eduardo.lima.fileavengers
 
 import org.junit.Test
 

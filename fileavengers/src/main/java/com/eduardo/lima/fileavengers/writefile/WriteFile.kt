@@ -15,7 +15,7 @@
  *
  */
 
-package com.appsmiths.lima.fileavengers.writefile
+package com.eduardo.lima.fileavengers.writefile
 
 import java.io.BufferedWriter
 import java.io.File
@@ -25,7 +25,8 @@ import java.io.FileWriter
 class WriteFile(private val listener: WriteFileListener) {
 
     class Builder {
-        fun build(listener: WriteFileListener) = WriteFile(listener)
+        fun build(listener: WriteFileListener) =
+            WriteFile(listener = listener)
     }
 
     fun execute(filePath: String, fileName: String, content: String, deleteIfExist: Boolean = false) {

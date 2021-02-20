@@ -12,7 +12,7 @@ android {
     }
 
     defaultConfig {
-        applicationId "com.appsmiths.lima.sampleapp"
+        applicationId "com.eduardo.lima.sampleapp"
         minSdkVersion 24
         targetSdkVersion 30
         versionCode 1

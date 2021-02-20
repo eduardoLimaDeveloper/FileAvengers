@@ -1,4 +1,4 @@
-package com.appsmiths.lima.sampleapp
+package com.eduardo.lima.sampleapp
 
 import org.junit.Test
 
