@@ -10,5 +10,5 @@ allprojects {
 	}
 
 dependencies {
-	        implementation 'com.github.eduardoLimaDeveloper:FileAvengers:Tag'
+	        implementation 'com.github.eduardoflclima:FileAvengers:Tag'
 	}
