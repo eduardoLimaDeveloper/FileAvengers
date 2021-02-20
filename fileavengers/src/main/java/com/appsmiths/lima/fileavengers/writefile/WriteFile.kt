@@ -20,13 +20,12 @@ package com.appsmiths.lima.fileavengers.writefile
 import java.io.BufferedWriter
 import java.io.File
 import java.io.FileWriter
-import java.io.IOException
 
 
-class WriteFile {
+class WriteFile(private val listener: WriteFileListener) {
 
     class Builder {
-        fun build() = WriteFile()
+        fun build(listener: WriteFileListener) = WriteFile(listener)
     }
 
     fun execute(filePath: String, fileName: String, content: String) {
@@ -34,16 +33,21 @@ class WriteFile {
         if (!file.exists()) {
             try {
                 file.createNewFile()
-            } catch (e: IOException) {
-                e.printStackTrace()
+            } catch (exception: Exception) {
+                listener.onFailed(exception)
             }
         }
 
-        val fileWriter = FileWriter(file, true)
-        val bufferedWriter = BufferedWriter(fileWriter)
+        try {
+            val fileWriter = FileWriter(file, true)
+            val bufferedWriter = BufferedWriter(fileWriter)
 
-        bufferedWriter.append(content)
-        bufferedWriter.newLine()
-        bufferedWriter.close()
+            bufferedWriter.append(content)
+            bufferedWriter.newLine()
+            bufferedWriter.close()
+            listener.onSuccess()
+        } catch (exception: java.lang.Exception) {
+            listener.onFailed(exception)
+        }
     }
 }

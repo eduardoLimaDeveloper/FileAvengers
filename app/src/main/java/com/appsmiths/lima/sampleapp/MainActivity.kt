@@ -25,6 +25,7 @@ import androidx.core.app.ActivityCompat
 import com.appsmiths.lima.fileavengers.readfile.ReadFile
 import com.appsmiths.lima.fileavengers.readfile.ReadFileListener
 import com.appsmiths.lima.fileavengers.writefile.WriteFile
+import com.appsmiths.lima.fileavengers.writefile.WriteFileListener
 import com.appsmiths.lima.sampleapp.databinding.ActivityMainBinding
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.snackbar.Snackbar
@@ -44,7 +45,7 @@ class MainActivity : AppCompatActivity() {
         getExternalFilesDir(Environment.DIRECTORY_DOCUMENTS)
     }
 
-    private val writeFile by lazy { WriteFile.Builder().build() }
+    private val writeFile by lazy { WriteFile.Builder().build(writeFileListener) }
     private val readFile by lazy { ReadFile.Builder().build(readFileListener) }
 
     private val readFileListener = object : ReadFileListener() {
@@ -58,6 +59,16 @@ class MainActivity : AppCompatActivity() {
 
         override fun onFileNotAvailable() {
             Snackbar.make(binding.root, R.string.file_not_available, Snackbar.LENGTH_LONG).show()
+        }
+    }
+
+    private val writeFileListener = object : WriteFileListener() {
+        override fun onSuccess() {
+            Snackbar.make(binding.root, R.string.file_created, Snackbar.LENGTH_LONG).show()
+        }
+
+        override fun onFailed(exception: Exception) {
+            Snackbar.make(binding.root, exception.toString(), Snackbar.LENGTH_LONG).show()
         }
     }
 
