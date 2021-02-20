@@ -7,7 +7,7 @@ project.ext {
     mavGitUrl = 'https://github.com/eduardoLimaDeveloper/FileAvengers.git'
     mavProjectName = 'File Avengers'
     mavLibraryLicenses = ["Apache-2.0":'http://www.apache.org/licenses/LICENSE-2.0.txt']
-    mavLibraryDescription = "File Avengers library"
+    mavLibraryDescription = "Ultimate file utils library"
     mavPublishToMavenLocal = true
     mavSiteUrl = 'https://github.com/eduardoLimaDeveloper/FileAvengers'
 }
@@ -25,7 +25,7 @@ bintray {
         repo = 'maven'
         name = 'FileAvengers'
         userOrg = 'appsmiths'
-        description = "File Avengers library"
+        description = "Ultimate file utils library"
         publicDownloadNumbers = true
         licenses = ['Apache-2.0']
         vcsUrl = 'https://github.com/eduardoLimaDeveloper/FileAvengers'
