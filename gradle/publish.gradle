@@ -1,0 +1,40 @@
+apply plugin: 'com.jfrog.bintray'
+
+group = PUBLISH_GROUP_ID
+version = PUBLISH_VERSION
+
+project.ext {
+    mavGitUrl = 'https://github.com/eduardoLimaDeveloper/FileAvengers.git'
+    mavProjectName = 'File Avengers'
+    mavLibraryLicenses = ["Apache-2.0":'http://www.apache.org/licenses/LICENSE-2.0.txt']
+    mavLibraryDescription = "File Avengers library"
+    mavPublishToMavenLocal = true
+    mavSiteUrl = 'https://github.com/eduardoLimaDeveloper/FileAvengers'
+}
+
+def properties = new Properties()
+properties.load(new FileInputStream("local.properties"))
+
+bintray {
+    user = properties.getProperty("bintray.user")
+    key = properties.getProperty("bintray.apikey")
+    publications = ['Production']
+    configurations = ['archives']
+    override = true
+    pkg {
+        repo = 'maven'
+        name = 'AwesomeLib'
+        description = "It's an awesome lib"
+        publicDownloadNumbers = true
+        licenses = ['Apache-2.0']
+        vcsUrl = 'https://github.com/eduardoLimaDeveloper/FileAvengers'
+        version {
+            name = this.version
+            desc = "Version ${this.version}"
+            released = new Date()
+            vcsTag = this.version
+        }
+    }
+}
+
+apply from: 'https://raw.githubusercontent.com/sky-uk/gradle-maven-plugin/master/gradle-mavenizer.gradle'
