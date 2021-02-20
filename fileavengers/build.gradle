@@ -9,6 +9,8 @@ ext {
     PUBLISH_ARTIFACT_ID = 'fileavengers'
 }
 
+apply from: "${rootProject.projectDir}/gradle/publish.gradle"
+
 android {
     compileSdkVersion 30
     buildToolsVersion "30.0.3"

@@ -12,8 +12,8 @@ project.ext {
     mavSiteUrl = 'https://github.com/eduardoLimaDeveloper/FileAvengers'
 }
 
-def properties = new Properties()
-properties.load(new FileInputStream("local.properties"))
+Properties properties = new Properties()
+properties.load(project.rootProject.file('local.properties').newDataInputStream())
 
 bintray {
     user = properties.getProperty("bintray.user")
@@ -23,8 +23,9 @@ bintray {
     override = true
     pkg {
         repo = 'maven'
-        name = 'AwesomeLib'
-        description = "It's an awesome lib"
+        name = 'FileAvengers'
+        userOrg = 'appsmiths'
+        description = "File Avengers library"
         publicDownloadNumbers = true
         licenses = ['Apache-2.0']
         vcsUrl = 'https://github.com/eduardoLimaDeveloper/FileAvengers'
