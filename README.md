@@ -1,6 +1,6 @@
 # FileAvengers
 
-[![](https://jitpack.io/v/eduardoLimaDeveloper/FileAvengers.svg)](https://jitpack.io/#eduardoLimaDeveloper/FileAvengers)
+[![](https://jitpack.io/v/eduardoflclima/FileAvengers.svg)](https://jitpack.io/#eduardoflclima/FileAvengers)
 
 allprojects {
 		repositories {
