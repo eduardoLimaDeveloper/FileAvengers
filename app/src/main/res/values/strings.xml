@@ -2,4 +2,5 @@
     <string name="app_name">File Avengers</string>
     <string name="write_file_bt">Write Demo File</string>
     <string name="read_file_bt">Read Demo File</string>
+    <string name="file_not_available">File doesn\'t exist</string>
 </resources>

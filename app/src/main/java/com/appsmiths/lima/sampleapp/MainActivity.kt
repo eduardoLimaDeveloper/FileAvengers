@@ -20,10 +20,10 @@ package com.appsmiths.lima.sampleapp
 import android.Manifest
 import android.os.Bundle
 import android.os.Environment
-import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import com.appsmiths.lima.fileavengers.readfile.ReadFile
+import com.appsmiths.lima.fileavengers.readfile.ReadFileListener
 import com.appsmiths.lima.fileavengers.writefile.WriteFile
 import com.appsmiths.lima.sampleapp.databinding.ActivityMainBinding
 import com.google.android.material.button.MaterialButton
@@ -45,7 +45,21 @@ class MainActivity : AppCompatActivity() {
     }
 
     private val writeFile by lazy { WriteFile.Builder().build() }
-    private val readFile by lazy { ReadFile.Builder().build() }
+    private val readFile by lazy { ReadFile.Builder().build(readFileListener) }
+
+    private val readFileListener = object : ReadFileListener() {
+        override fun onSuccess(fileContent: String) {
+            Snackbar.make(binding.root, fileContent, Snackbar.LENGTH_LONG).show()
+        }
+
+        override fun onFailed(exception: Exception) {
+            Snackbar.make(binding.root, exception.toString(), Snackbar.LENGTH_LONG).show()
+        }
+
+        override fun onFileNotAvailable() {
+            Snackbar.make(binding.root, R.string.file_not_available, Snackbar.LENGTH_LONG).show()
+        }
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -70,8 +84,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun readDemoFile() {
-        val fileContent = readFile.execute(appFolder?.absolutePath.orEmpty(), DEMO_FILE)
-        Snackbar.make(binding.root, fileContent, Snackbar.LENGTH_LONG).show()
+        readFile.execute(appFolder?.absolutePath.orEmpty(), DEMO_FILE)
     }
 
     private fun requestPermission() {

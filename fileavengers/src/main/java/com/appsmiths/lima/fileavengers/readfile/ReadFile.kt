@@ -23,25 +23,34 @@ import java.io.FileInputStream
 import java.io.InputStreamReader
 
 
-class ReadFile {
+class ReadFile(private val listener: ReadFileListener) {
 
     class Builder {
-        fun build() = ReadFile()
+        fun build(listener: ReadFileListener) = ReadFile(listener)
     }
 
-    fun execute(filePath: String, fileName: String, charsetName: String = UTF8_ENCODING): String {
+    fun execute(filePath: String, fileName: String, charsetName: String = UTF8_ENCODING) {
         val file = File(filePath, fileName)
-        val inputStreamReader = InputStreamReader(FileInputStream(file), charsetName)
-        val bufferedReader = BufferedReader(inputStreamReader)
-        val stringBuilder = StringBuilder()
-        var line = bufferedReader.readLine()
-        while (line != null) {
-            stringBuilder.append(line)
-            line = bufferedReader.readLine()
+        if (!file.exists()) {
+            listener.onFileNotAvailable()
+            return
         }
-        bufferedReader.close()
 
-        return stringBuilder.toString()
+        try {
+            val inputStreamReader = InputStreamReader(FileInputStream(file), charsetName)
+            val bufferedReader = BufferedReader(inputStreamReader)
+            val stringBuilder = StringBuilder()
+            var line = bufferedReader.readLine()
+            while (line != null) {
+                stringBuilder.append(line)
+                line = bufferedReader.readLine()
+            }
+            bufferedReader.close()
+
+            listener.onSuccess(stringBuilder.toString())
+        } catch (exception: Exception) {
+            listener.onFailed(exception)
+        }
     }
 
     companion object {
