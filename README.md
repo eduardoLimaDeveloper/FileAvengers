@@ -2,7 +2,6 @@
 
 [![](https://jitpack.io/v/eduardoflclima/FileAvengers.svg)](https://jitpack.io/#eduardoflclima/FileAvengers)
 
-
 ## Install
 
 * Add this following maven repository into your root buidl.gradle file
