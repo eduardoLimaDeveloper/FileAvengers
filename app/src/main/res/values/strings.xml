@@ -3,7 +3,9 @@
     <string name="write_file_bt">Write Demo File</string>
     <string name="read_file_bt">Read Demo File</string>
     <string name="unzip_file_bt">Unzip Demo File</string>
+    <string name="download_file_bt">Download Demo File</string>
     <string name="file_not_available">File doesn\'t exist</string>
     <string name="file_created">File created</string>
     <string name="unzip_success">Unzip successfully</string>
+    <string name="download_success">Download successfully</string>
 </resources>

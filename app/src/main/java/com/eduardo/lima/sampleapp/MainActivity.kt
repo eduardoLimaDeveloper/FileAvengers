@@ -20,8 +20,11 @@ package com.eduardo.lima.sampleapp
 import android.Manifest
 import android.os.Bundle
 import android.os.Environment
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
+import com.eduardo.lima.fileavengers.download.DownloadFile
+import com.eduardo.lima.fileavengers.download.DownloadListener
 import com.eduardo.lima.fileavengers.readfile.ReadFile
 import com.eduardo.lima.fileavengers.readfile.ReadFileListener
 import com.eduardo.lima.fileavengers.unzip.Unzip
@@ -31,6 +34,7 @@ import com.eduardo.lima.fileavengers.writefile.WriteFileListener
 import com.eduardo.lima.sampleapp.databinding.ActivityMainBinding
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.snackbar.Snackbar
+import java.io.File
 
 
 class MainActivity : AppCompatActivity() {
@@ -44,6 +48,8 @@ class MainActivity : AppCompatActivity() {
         get() = binding.readFileBt
     private val unzipFileBt: MaterialButton
         get() = binding.unzipFileBt
+    private val downloadFileBt: MaterialButton
+        get() = binding.downloadFileBt
 
     private val appFolder by lazy {
         getExternalFilesDir(Environment.DIRECTORY_DOCUMENTS)
@@ -52,6 +58,7 @@ class MainActivity : AppCompatActivity() {
     private val writeFile by lazy { WriteFile.Builder().build(writeFileListener) }
     private val readFile by lazy { ReadFile.Builder().build(readFileListener) }
     private val unzip by lazy { Unzip.Builder().build(unzipListener) }
+    private val downloadFile by lazy { DownloadFile.Builder().build(downloadListener) }
 
     private val readFileListener = object : ReadFileListener() {
         override fun onSuccess(fileContent: String) {
@@ -63,15 +70,19 @@ class MainActivity : AppCompatActivity() {
         }
 
         override fun onFileNotAvailable() {
-            Snackbar.make(binding.root,
-                R.string.file_not_available, Snackbar.LENGTH_LONG).show()
+            Snackbar.make(
+                binding.root,
+                R.string.file_not_available, Snackbar.LENGTH_LONG
+            ).show()
         }
     }
 
     private val writeFileListener = object : WriteFileListener() {
         override fun onSuccess() {
-            Snackbar.make(binding.root,
-                R.string.file_created, Snackbar.LENGTH_LONG).show()
+            Snackbar.make(
+                binding.root,
+                R.string.file_created, Snackbar.LENGTH_LONG
+            ).show()
         }
 
         override fun onFailed(exception: Exception) {
@@ -81,12 +92,31 @@ class MainActivity : AppCompatActivity() {
 
     private val unzipListener = object : UnzipListener() {
         override fun onSuccess(unzippedFolder: String) {
-            Snackbar.make(binding.root,
-                R.string.unzip_success, Snackbar.LENGTH_LONG).show()
+            Snackbar.make(
+                binding.root,
+                R.string.unzip_success, Snackbar.LENGTH_LONG
+            ).show()
         }
 
         override fun onError(exception: Exception) {
             Snackbar.make(binding.root, exception.toString(), Snackbar.LENGTH_LONG).show()
+        }
+    }
+
+    private val downloadListener = object : DownloadListener() {
+        override fun onSuccess(folder: File?, fileName: String) {
+            Snackbar.make(
+                binding.root,
+                R.string.download_success, Snackbar.LENGTH_LONG
+            ).show()
+        }
+
+        override fun onError(message: String, exception: Exception?) {
+            Snackbar.make(binding.root, exception.toString(), Snackbar.LENGTH_LONG).show()
+        }
+
+        override fun onProgress(progress: Int) {
+            Log.d("FileAvengersDummy", "progress: $progress")
         }
     }
 
@@ -106,6 +136,10 @@ class MainActivity : AppCompatActivity() {
             readDemoFile()
         }
 
+        downloadFileBt.setOnClickListener {
+            downloadDemoFile()
+        }
+
         unzipFileBt.setOnClickListener {
             unzipDemoFile()
         }
@@ -113,18 +147,30 @@ class MainActivity : AppCompatActivity() {
 
     private fun writeDemoFile() {
         val demoFileContent = "This is a demo file content data"
-        writeFile.execute(appFolder?.absolutePath.orEmpty(),
-            DEMO_FILE, demoFileContent)
+        writeFile.execute(
+            appFolder?.absolutePath.orEmpty(),
+            DEMO_FILE, demoFileContent
+        )
     }
 
     private fun readDemoFile() {
-        readFile.execute(appFolder?.absolutePath.orEmpty(),
+        readFile.execute(
+            appFolder?.absolutePath.orEmpty(),
             DEMO_FILE
         )
     }
 
+    private fun downloadDemoFile() {
+        downloadFile.execute(
+            context = this,
+            fileUrl = DUMMY_FILE_TO_DOWNLOAD,
+            authority = "${BuildConfig.APPLICATION_ID}.provider"
+        )
+    }
+
     private fun unzipDemoFile() {
-        unzip.execute(appFolder?.absolutePath.orEmpty(),
+        unzip.execute(
+            appFolder?.absolutePath.orEmpty(),
             UNZIP_FILE
         )
     }
@@ -140,6 +186,7 @@ class MainActivity : AppCompatActivity() {
     companion object {
         private const val DEMO_FILE = "demoFile.txt"
         private const val UNZIP_FILE = "demo.zip"
+        private const val DUMMY_FILE_TO_DOWNLOAD = "http://ipv4.download.thinkbroadband.com/100MB.zip"
 
         private const val PERMISSION_REQUEST_CODE = 200
         private val EXTERNAL_STORAGE = arrayOf(
