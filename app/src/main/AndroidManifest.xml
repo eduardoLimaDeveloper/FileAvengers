@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.appsmiths.lima.sampleapp" >
+    package="com.eduardo.lima.sampleapp" >
 
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
@@ -23,7 +23,7 @@
                 android:resource="@xml/external_files" />
         </provider>
 
-        <activity android:name="com.appsmiths.lima.sampleapp.MainActivity" >
+        <activity android:name="com.eduardo.lima.sampleapp.MainActivity" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
